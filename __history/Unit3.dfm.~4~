@@ -1,0 +1,27 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Nierodkoszachy'
+  ClientHeight = 633
+  ClientWidth = 651
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object Label1: TLabel
+    Left = 184
+    Top = 24
+    Width = 228
+    Height = 34
+    Caption = 'NierodkoSzachy'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -23
+    Font.Name = '@Dela Gothic One'
+    Font.Style = []
+    ParentFont = False
+  end
+end
