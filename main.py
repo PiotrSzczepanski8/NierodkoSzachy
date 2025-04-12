@@ -2,7 +2,6 @@ from board import *
 import pygame
 
 board = Board()
-board.setup_pieces()
 
 pygame.init()
 
@@ -30,10 +29,10 @@ while running:
             running = False
 
     screen.blit(background, (0, 0))
-    board_top = 80
 
     pygame.draw.rect(screen, red, pygame.Rect(board_left, board_top, field_size*8, field_size*8))
 
+    # board
     j = 0
     while j<8:
         board_left = 32+field_size
@@ -51,7 +50,22 @@ while running:
         board_top += field_size
     
     board_left = 32
+    board_top = 80
 
+    # pieces
+    for i in range(8):
+       for j in range(8):
+          if board.board[i][j]:
+            image_name = 'images/' + board.board[i][j].name + '.png'
+
+            if board.board[i][j].color == 'white':
+                image_name = 'images/' + board.board[i][j].name + '-red.png'
+               
+            image = pygame.image.load(image_name)
+            image = pygame.transform.scale(image, (field_size, field_size))
+
+            screen.blit(image, (board_left+(field_size*j), board_top+(field_size*i)))
+    
     pygame.display.flip()
     clock.tick(60)
 
