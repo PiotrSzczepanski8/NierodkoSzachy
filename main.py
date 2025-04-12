@@ -4,11 +4,13 @@ import pygame
 board = Board()
 
 pygame.init()
+pygame.display.set_caption('NierodkoSzachy')
 
 screen_width = 875
 screen_height = 738
 
 screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_icon(pygame.image.load('images/king.png'))
 
 navy_blue = '#12003D'
 red = '#E73A23'
