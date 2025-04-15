@@ -2,6 +2,7 @@ class Piece:
     def __init__(self, name, color):
         self.name = name
         self.color = color
+        self.selected = False
 
     def check_movement(self, i, j, k, l):
         down_factor = i-j

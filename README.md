@@ -1,1 +1,1 @@
-# NierodkoSzachy
+# NierodkoSzachy <img src='images/rook-red.png' style="width: 1em"></h1>
