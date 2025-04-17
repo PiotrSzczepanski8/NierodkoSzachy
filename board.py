@@ -20,3 +20,19 @@ class Board:
             Piece('knight', 'black'), Piece('rook', 'black')
         ]
         self.board[1] = [Piece('pawn', 'black') for i in range(8)]
+    
+    def shortest_way(self, i, j, k, l):
+        x, y = i, j
+
+        dx = 1 if k > i else (-1 if k < i else 0)
+        dy = 1 if l > j else (-1 if l < j else 0)
+
+        while True:
+            x += dx
+            y += dy
+            if (x, y) == (k, l):
+                break
+            if self.board[x][y] is not None:
+                return False
+
+        return True

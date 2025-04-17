@@ -160,11 +160,15 @@ while running:
       else:
         different_color = True
         
-      print(movement_allowed)
-      if movement_allowed and mouse_pos != selected_field and different_color:
+      if board.board[selected_field[0]][selected_field[1]].name != 'knight':
+        no_collision = board.shortest_way(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
+        print(no_collision)
+      else:
+        no_collision = True
+      # print(movement_allowed)
+      if movement_allowed and mouse_pos != selected_field and different_color and no_collision:
         board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
         board.board[mouse_pos[0]][mouse_pos[1]].selected = False
-        board.board[selected_field[0]][selected_field[1]].selected = False
         board.board[selected_field[0]][selected_field[1]] = None
 
     pygame.display.flip()

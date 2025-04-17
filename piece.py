@@ -22,14 +22,6 @@ class Piece:
         
         if abs(i - k) <= 1 and abs(j - l) <= 1 and not (i == k and j == l):
             adjacent = True # king movement
-
-        '''
-        if (i-1 == k or (i == 6 and k == 4)) and j-l <= 1 and l-j <= 1 and self.color == 'white':
-            forward = True
-
-        if (i+1 == k or (i == 1 and k == 3)) and j-l <= 1 and l-j <= 1 and self.color == 'black':
-            backwards = True
-        '''
         
         if self.color == 'white':
             if k == i - 1 and l == j:
