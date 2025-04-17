@@ -7,24 +7,41 @@ class Piece:
     def check_movement(self, i, j, k, l):
         down_factor = i-j
         up_factor = i+j
-        if k-l == down_factor and k+l == up_factor:
+        
+        diagonal = straight = lshape = adjacent = forward = backwards = False
+        
+        if (k-l == down_factor) or (k+l == up_factor):
             diagonal = True
 
         if k == i or l == j:
             straight = True
 
-        offsets = [(-1, -2), (-2, -1), (1, 2), (2, 1), (-1, 2), (2, -1), (1, -2), (-2, 1)]
-        if [k - i, l - j] in offsets:
+        lshape_offsets = [(-1, -2), (-2, -1), (1, 2), (2, 1), (-1, 2), (2, -1), (1, -2), (-2, 1)]
+        if (k - i, l - j) in lshape_offsets:
             lshape = True
         
         if abs(i - k) <= 1 and abs(j - l) <= 1 and not (i == k and j == l):
-            adjacent = True
+            adjacent = True # king movement
 
-        if (i-1 == k or (i == 6 and k == 4)) and self.color == 'white':
+        '''
+        if (i-1 == k or (i == 6 and k == 4)) and j-l <= 1 and l-j <= 1 and self.color == 'white':
             forward = True
 
-        if (i+1 == k or (i == 1 and k == 3)) and self.color == 'black':
+        if (i+1 == k or (i == 1 and k == 3)) and j-l <= 1 and l-j <= 1 and self.color == 'black':
             backwards = True
+        '''
+        
+        if self.color == 'white':
+            if k == i - 1 and l == j:
+                forward = True
+            if i == 6 and k == i - 2 and l == j:
+                forward = True
+                
+        elif self.color == 'black':
+            if k == i + 1 and l == j:
+                backwards = True
+            if i == 1 and k == i + 2 and l == j:
+                backwards = True
 
         if self.name == 'bishop' and diagonal == True:
             return True
@@ -32,7 +49,7 @@ class Piece:
         if self.name == 'rook' and straight == True:
             return True
         
-        if self.name == 'queen' and diagonal and straight:
+        if self.name == 'queen' and (diagonal or straight):
             return True
         
         if self.name == 'knight' and lshape:

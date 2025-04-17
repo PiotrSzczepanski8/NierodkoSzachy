@@ -20,5 +20,3 @@ class Board:
             Piece('knight', 'black'), Piece('rook', 'black')
         ]
         self.board[1] = [Piece('pawn', 'black') for i in range(8)]
-
-    # shortest way (i, j, k, l)

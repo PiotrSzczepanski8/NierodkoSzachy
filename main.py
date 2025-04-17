@@ -125,6 +125,8 @@ while running:
     board_left = 32
     board_top = 80
 
+    field_selected = False
+
     # pieces
     for i in range(8):
        for j in range(8):
@@ -139,19 +141,31 @@ while running:
 
             screen.blit(image, (board_left+(field_size*j), board_top+(field_size*i)))
             
+            if board.board[i][j].selected:
+              field_selected = True
+              selected_field = [i, j]
+            
             if [i, j] == mouse_pos:
               board.board[i][j].selected = True
             else:
               board.board[i][j].selected = False
               
-    '''
-    for i in range(8):
-      for j in range(8):
-        if [i, j] == mouse_pos:
-          board.board[i][j].selected = True
-        elif board.board[i][j]:
-          board.board[i][j].selected = False
-        '''      
+    if field_selected:
+      movement_allowed = board.board[selected_field[0]][selected_field[1]].check_movement(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
+      if board.board[mouse_pos[0]][mouse_pos[1]]:
+        if board.board[selected_field[0]][selected_field[1]].color != board.board[mouse_pos[0]][mouse_pos[1]].color:
+          different_color = True
+        else:
+          different_color = False
+      else:
+        different_color = True
+        
+      print(movement_allowed)
+      if movement_allowed and mouse_pos != selected_field and different_color:
+        board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
+        board.board[mouse_pos[0]][mouse_pos[1]].selected = False
+        board.board[selected_field[0]][selected_field[1]].selected = False
+        board.board[selected_field[0]][selected_field[1]] = None
 
     pygame.display.flip()
     clock.tick(60)
