@@ -152,8 +152,8 @@ while running:
                 board.board[i][j].selected = True
             else:
               board.board[i][j].selected = False
-
-    if field_selected:
+    
+    if field_selected and mouse_pos[0] < 8 and mouse_pos[1] < 8:
       movement_allowed = board.board[selected_field[0]][selected_field[1]].check_movement(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
       if board.board[mouse_pos[0]][mouse_pos[1]]:
         if board.board[selected_field[0]][selected_field[1]].color != board.board[mouse_pos[0]][mouse_pos[1]].color:
