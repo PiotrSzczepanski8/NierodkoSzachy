@@ -27,6 +27,8 @@ background = pygame.transform.scale(background, (screen_width, screen_height))
 
 mouse_pos = [screen_width, screen_height]
 
+red_move = True
+
 while running:
     
     for e in pygame.event.get():
@@ -144,12 +146,13 @@ while running:
             if board.board[i][j].selected:
               field_selected = True
               selected_field = [i, j]
-            
+
             if [i, j] == mouse_pos:
-              board.board[i][j].selected = True
+              if ((red_move and board.board[i][j].color == 'white') or (red_move == False and board.board[i][j].color == 'black')):
+                board.board[i][j].selected = True
             else:
               board.board[i][j].selected = False
-              
+
     if field_selected:
       movement_allowed = board.board[selected_field[0]][selected_field[1]].check_movement(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
       if board.board[mouse_pos[0]][mouse_pos[1]]:
@@ -160,9 +163,9 @@ while running:
       else:
         different_color = True
         
-      if board.board[selected_field[0]][selected_field[1]].name != 'knight':
-        no_collision = board.shortest_way(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
-        print(no_collision)
+      if board.board[selected_field[0]][selected_field[1]].name != 'knight' and movement_allowed:
+        no_collision = board.no_collision(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
+        # print(no_collision)
       else:
         no_collision = True
       # print(movement_allowed)
@@ -170,7 +173,11 @@ while running:
         board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
         board.board[mouse_pos[0]][mouse_pos[1]].selected = False
         board.board[selected_field[0]][selected_field[1]] = None
-
+        if red_move:
+          red_move = False
+        else:
+          red_move = True
+    
     pygame.display.flip()
     clock.tick(60)
 

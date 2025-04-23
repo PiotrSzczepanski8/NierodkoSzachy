@@ -21,7 +21,7 @@ class Board:
         ]
         self.board[1] = [Piece('pawn', 'black') for i in range(8)]
     
-    def shortest_way(self, i, j, k, l):
+    def no_collision(self, i, j, k, l):
         x, y = i, j
 
         dx = 1 if k > i else (-1 if k < i else 0)
@@ -32,7 +32,7 @@ class Board:
             y += dy
             if (x, y) == (k, l):
                 break
-            if self.board[x][y] is not None:
+            if self.board[x][y] != None:
                 return False
 
         return True
