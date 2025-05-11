@@ -163,6 +163,19 @@ while running:
       else:
         different_color = True
         
+      if board.board[selected_field[0]][selected_field[1]].name == 'pawn':
+          color = board.board[selected_field[0]][selected_field[1]].color
+          direction = -1 if color == 'white' else 1
+
+          target_i, target_j = mouse_pos
+
+          i, j = selected_field
+
+          if target_i == i + direction and abs(target_j - j) == 1:
+              target_piece = board.board[target_i][target_j]
+              if target_piece and target_piece.color != color:
+                  movement_allowed = True
+            
       if board.board[selected_field[0]][selected_field[1]].name != 'knight' and movement_allowed:
         no_collision = board.no_collision(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
         # print(no_collision)
