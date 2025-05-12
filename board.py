@@ -5,6 +5,7 @@ class Board:
     def __init__(self):
         self.board = np.empty((8, 8),dtype=object)
         self.setup_pieces()
+        self.rotated = False
 
     def setup_pieces(self):
         self.board[7] = [

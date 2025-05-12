@@ -47,9 +47,12 @@ while running:
         for i in range(0, 8, 2):
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
+          if red_move == False:
+            i = 7-i
+            j = 7-j
           if field.contains(mouse_rect):
             mouse_pos = [j, i]
-            print(mouse_pos)
+            # print(mouse_pos)
           if board.board[j][i]:
             if board.board[j][i].selected:
               field_color = '#822C20'
@@ -66,9 +69,12 @@ while running:
         for i in range(1, 8, 2):
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
+          if red_move == False:
+            i = 7-i
+            j = 7-j
           if field.contains(mouse_rect):
             mouse_pos = [j, i]
-            print(mouse_pos)
+            # print(mouse_pos)
           if board.board[j][i]:
             if board.board[j][i].selected:
               field_color = '#822C20'
@@ -90,9 +96,12 @@ while running:
         for i in range(1, 8, 2):
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
+          if red_move == False:
+            i = 7-i
+            j = 7-j
           if field.contains(mouse_rect):
             mouse_pos = [j, i]
-            print(mouse_pos)
+            # print(mouse_pos)
           if board.board[j][i]:
             if board.board[j][i].selected:
               field_color = '#887F9D'
@@ -109,9 +118,12 @@ while running:
         for i in range(0, 8, 2):
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
+          if red_move == False:
+            i = 7-i
+            j = 7-j
           if field.contains(mouse_rect):
             mouse_pos = [j, i]
-            print(mouse_pos)
+            # print(mouse_pos)
           if board.board[j][i]:
             if board.board[j][i].selected:
               field_color = '#887F9D'
@@ -131,8 +143,9 @@ while running:
 
     # pieces
     for i in range(8):
-       for j in range(8):
+       for j in range(8):            
           if board.board[i][j]:
+            
             image_name = 'images/' + board.board[i][j].name + '.png'
 
             if board.board[i][j].color == 'white':
@@ -140,8 +153,11 @@ while running:
 
             image = pygame.image.load(image_name)
             image = pygame.transform.scale(image, (field_size, field_size))
-
-            screen.blit(image, (board_left+(field_size*j), board_top+(field_size*i)))
+            
+            if red_move == False:
+              screen.blit(image, (board_left+(field_size*(7-j)), board_top+(field_size*(7-i))))
+            else:
+              screen.blit(image, (board_left+(field_size*j), board_top+(field_size*i)))
             
             if board.board[i][j].selected:
               field_selected = True
@@ -164,6 +180,8 @@ while running:
         different_color = True
         
       if board.board[selected_field[0]][selected_field[1]].name == 'pawn':
+          if board.board[mouse_pos[0]][mouse_pos[1]]:
+            movement_allowed = False
           color = board.board[selected_field[0]][selected_field[1]].color
           direction = -1 if color == 'white' else 1
 
