@@ -48,13 +48,16 @@ while running:
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
           if red_move == False:
-            i = 7-i
-            j = 7-j
+            draw_i = 7-i
+            draw_j = 7-j
+          else:
+            draw_i = i
+            draw_j = j
           if field.contains(mouse_rect):
-            mouse_pos = [j, i]
+            mouse_pos = [draw_j, draw_i]
             # print(mouse_pos)
-          if board.board[j][i]:
-            if board.board[j][i].selected:
+          if board.board[draw_j][draw_i]:
+            if board.board[draw_j][draw_i].selected:
               field_color = '#822C20'
             else:
               field_color = red
@@ -70,13 +73,16 @@ while running:
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
           if red_move == False:
-            i = 7-i
-            j = 7-j
+            draw_i = 7-i
+            draw_j = 7-j
+          else:
+            draw_i = i
+            draw_j = j
           if field.contains(mouse_rect):
-            mouse_pos = [j, i]
+            mouse_pos = [draw_j, draw_i]
             # print(mouse_pos)
-          if board.board[j][i]:
-            if board.board[j][i].selected:
+          if board.board[draw_j][draw_i]:
+            if board.board[draw_j][draw_i].selected:
               field_color = '#822C20'
             else:
               field_color = red
@@ -97,13 +103,16 @@ while running:
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
           if red_move == False:
-            i = 7-i
-            j = 7-j
+            draw_i = 7-i
+            draw_j = 7-j
+          else:
+            draw_i = i
+            draw_j = j
           if field.contains(mouse_rect):
-            mouse_pos = [j, i]
+            mouse_pos = [draw_j, draw_i]
             # print(mouse_pos)
-          if board.board[j][i]:
-            if board.board[j][i].selected:
+          if board.board[draw_j][draw_i]:
+            if board.board[draw_j][draw_i].selected:
               field_color = '#887F9D'
             else:
               field_color = navy_blue
@@ -119,13 +128,16 @@ while running:
           field = pygame.Rect(board_left, board_top, field_size, field_size)
           mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
           if red_move == False:
-            i = 7-i
-            j = 7-j
+            draw_i = 7-i
+            draw_j = 7-j
+          else:
+            draw_i = i
+            draw_j = j
           if field.contains(mouse_rect):
-            mouse_pos = [j, i]
+            mouse_pos = [draw_j, draw_i]
             # print(mouse_pos)
-          if board.board[j][i]:
-            if board.board[j][i].selected:
+          if board.board[draw_j][draw_i]:
+            if board.board[draw_j][draw_i].selected:
               field_color = '#887F9D'
             else:
               field_color = navy_blue
