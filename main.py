@@ -3,11 +3,17 @@ import pygame
 
 board = Board()
 
-pygame.init()
-pygame.display.set_caption('NierodkoSzachy')
-
 screen_width = 875
 screen_height = 738
+
+pygame.init()
+pygame.display.set_caption('NierodkoSzachy')
+title = 'NierodkoSzachy'
+
+font = pygame.font.Font("fonts/DelaGothicOne.ttf", 36)
+title_surface = font.render(title, True, "#000000")
+title_rect = title_surface.get_rect()
+title_rect.center = ((32 + 64*8) / 2, 40)
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_icon(pygame.image.load('images/king.png'))
@@ -17,6 +23,7 @@ red = '#E73A23'
 
 clock = pygame.time.Clock()
 running = True
+game_active = False
 
 board_top = 80
 board_left = 32
@@ -37,8 +44,16 @@ while running:
         
         if e.type == pygame.MOUSEBUTTONUP:
           mouse_pos = pygame.mouse.get_pos()
-
+    
     screen.blit(background, (0, 0))
+    screen.blit(title_surface, title_rect)
+    
+    '''
+    if game_active == False:
+      pygame.display.flip()
+      clock.tick(60)
+      continue
+    '''
 
     # board
     j = 0
@@ -216,6 +231,7 @@ while running:
         board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
         board.board[mouse_pos[0]][mouse_pos[1]].selected = False
         board.board[selected_field[0]][selected_field[1]] = None
+           
         if red_move:
           red_move = False
         else:
