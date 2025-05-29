@@ -35,8 +35,12 @@ background = pygame.transform.scale(background, (screen_width, screen_height))
 mouse_pos = [screen_width, screen_height]
 
 red_move = True
+isTimeout = False
 
 while running:
+  
+    if isTimeout:
+        timeout+=1
     
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -227,16 +231,34 @@ while running:
       else:
         no_collision = True
       # print(movement_allowed)
+    
       if movement_allowed and mouse_pos != selected_field and different_color and no_collision:
         board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
         board.board[mouse_pos[0]][mouse_pos[1]].selected = False
         board.board[selected_field[0]][selected_field[1]] = None
-           
+        '''
         if red_move:
-          red_move = False
+            red_move = False
         else:
-          red_move = True
+            red_move = True
+        '''
+        isTimeout = True
+        timeout = 0
+           
     
+    
+    if isTimeout and timeout == 20:  
+          isTimeout = False
+          for i in range(8):
+            for j in range(8):
+              if board.board[i][j]:
+                board.board[i][j].selected = False
+          if red_move:
+            red_move = False
+          else:
+            red_move = True
+    
+            
     pygame.display.flip()
     clock.tick(60)
 
