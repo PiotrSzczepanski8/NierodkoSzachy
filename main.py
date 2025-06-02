@@ -34,11 +34,12 @@ background = pygame.transform.scale(background, (screen_width, screen_height))
 
 mouse_pos = [screen_width, screen_height]
 
+promotion = False
+promotion_pieces = ["bishop", "rook", "queen", "knight"]
 red_move = True
 isTimeout = False
 
 while running:
-  
     if isTimeout:
         timeout+=1
     
@@ -52,13 +53,32 @@ while running:
     screen.blit(background, (0, 0))
     screen.blit(title_surface, title_rect)
     
-    '''
-    if game_active == False:
-      pygame.display.flip()
-      clock.tick(60)
-      continue
-    '''
-
+    if promotion:
+      dialog_left = 560
+      if red_move:
+        piece_color = "red"
+      else:
+        piece_color = ""
+      
+      for piece in promotion_pieces:
+        if piece_color == "":
+          image_name = "images/" + piece + ".png"
+        else:
+          image_name = "images/" + piece + "-" + piece_color + ".png"
+        image = pygame.image.load(image_name)
+        image = pygame.transform.scale(image, (field_size, field_size))
+        screen.blit(image, (dialog_left, 150))
+        
+        field = pygame.Rect(dialog_left, 150, field_size, field_size)
+        mouse_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 1, 1)
+        
+        if field.contains(mouse_rect):
+          promotion = False
+          timeout = 0
+          board.board[promotion_y, promotion_x].name = piece
+ 
+        dialog_left += 74
+            
     # board
     j = 0
     while j<8:
@@ -224,7 +244,7 @@ while running:
               target_piece = board.board[target_i][target_j]
               if target_piece and target_piece.color != color:
                   movement_allowed = True
-            
+                        
       if board.board[selected_field[0]][selected_field[1]].name != 'knight' and movement_allowed:
         no_collision = board.no_collision(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
         # print(no_collision)
@@ -234,6 +254,12 @@ while running:
     
       if movement_allowed and mouse_pos != selected_field and different_color and no_collision:
         board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
+        if board.board[selected_field[0]][selected_field[1]].name == "pawn":
+            if mouse_pos[0] == 0 or mouse_pos[0] == 7:
+              promotion = True
+              promotion_x = mouse_pos[1]
+              promotion_y = mouse_pos[0]
+              # board.board[mouse_pos[0]][mouse_pos[1]].name = "queen"
         board.board[mouse_pos[0]][mouse_pos[1]].selected = False
         board.board[selected_field[0]][selected_field[1]] = None
         '''
@@ -247,7 +273,7 @@ while running:
            
     
     
-    if isTimeout and timeout == 20:  
+    if isTimeout and timeout == 20 and not promotion:  
           isTimeout = False
           for i in range(8):
             for j in range(8):
