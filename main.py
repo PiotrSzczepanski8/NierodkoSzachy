@@ -59,7 +59,7 @@ while running:
         piece_color = "red"
       else:
         piece_color = ""
-      
+
       for piece in promotion_pieces:
         if piece_color == "":
           image_name = "images/" + piece + ".png"
@@ -94,7 +94,7 @@ while running:
             draw_j = j
           if field.contains(mouse_rect):
             mouse_pos = [draw_j, draw_i]
-            # print(mouse_pos)
+            print(mouse_pos)
           if board.board[draw_j][draw_i]:
             if board.board[draw_j][draw_i].selected:
               field_color = '#822C20'
@@ -119,7 +119,7 @@ while running:
             draw_j = j
           if field.contains(mouse_rect):
             mouse_pos = [draw_j, draw_i]
-            # print(mouse_pos)
+            print(mouse_pos)
           if board.board[draw_j][draw_i]:
             if board.board[draw_j][draw_i].selected:
               field_color = '#822C20'
@@ -149,7 +149,7 @@ while running:
             draw_j = j
           if field.contains(mouse_rect):
             mouse_pos = [draw_j, draw_i]
-            # print(mouse_pos)
+            print(mouse_pos)
           if board.board[draw_j][draw_i]:
             if board.board[draw_j][draw_i].selected:
               field_color = '#887F9D'
@@ -174,7 +174,7 @@ while running:
             draw_j = j
           if field.contains(mouse_rect):
             mouse_pos = [draw_j, draw_i]
-            # print(mouse_pos)
+            print(mouse_pos)
           if board.board[draw_j][draw_i]:
             if board.board[draw_j][draw_i].selected:
               field_color = '#887F9D'
@@ -244,30 +244,86 @@ while running:
               target_piece = board.board[target_i][target_j]
               if target_piece and target_piece.color != color:
                   movement_allowed = True
-                        
-      if board.board[selected_field[0]][selected_field[1]].name != 'knight' and movement_allowed:
+      castling = False
+      if board.board[selected_field[0]][selected_field[1]].name == 'king':
+          if board.board[selected_field[0]][selected_field[1]].has_moved == False:
+            if mouse_pos[0] == 7 and mouse_pos[1] == 6:
+                if board.board[7][7]:
+                  if board.board[7][7].has_moved == False and board.board[7][7].name == 'rook':
+                    castling = True
+                    board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
+                    board.board[mouse_pos[0]][mouse_pos[1]].selected = False
+                    board.board[mouse_pos[0]][mouse_pos[1]].has_moved = True
+                    board.board[selected_field[0]][selected_field[1]] = None
+                    board.board[7][5] = board.board[7][7]
+                    board.board[7][5].has_moved = True
+                    board.board[7][7] = None
+                    isTimeout = True
+                    timeout = 0
+            
+            if mouse_pos[0] == 7 and mouse_pos[1] == 2:
+              if board.board[7][0]:
+                  if board.board[7][0].has_moved == False and board.board[7][0].name == 'rook':
+                      if board.board[7][1] is None and board.board[7][2] is None and board.board[7][3] is None:
+                          castling = True
+                          board.board[7][2] = board.board[7][4]
+                          board.board[7][2].selected = False
+                          board.board[7][2].has_moved = True
+                          board.board[7][4] = None
+                          board.board[7][3] = board.board[7][0]
+                          board.board[7][3].has_moved = True
+                          board.board[7][0] = None
+                          isTimeout = True
+                          timeout = 0
+                          
+            if mouse_pos[0] == 0 and mouse_pos[1] == 6:
+              if board.board[0][7]:
+                  if board.board[0][7].has_moved == False and board.board[0][7].name == 'rook':
+                      if board.board[0][5] is None and board.board[0][6] is None:
+                          castling = True
+                          board.board[0][6] = board.board[0][4]
+                          board.board[0][6].selected = False
+                          board.board[0][6].has_moved = True
+                          board.board[0][4] = None
+                          board.board[0][5] = board.board[0][7]
+                          board.board[0][5].has_moved = True
+                          board.board[0][7] = None
+                          isTimeout = True
+                          timeout = 0
+                          
+            if mouse_pos[0] == 0 and mouse_pos[1] == 2:
+              if board.board[0][0]:
+                  if board.board[0][0].has_moved == False and board.board[0][0].name == 'rook':
+                      if board.board[0][1] is None and board.board[0][2] is None and board.board[0][3] is None:
+                          castling = True
+                          board.board[0][2] = board.board[0][4]
+                          board.board[0][2].selected = False
+                          board.board[0][2].has_moved = True
+                          board.board[0][4] = None
+                          board.board[0][3] = board.board[0][0]
+                          board.board[0][3].has_moved = True
+                          board.board[0][0] = None
+                          isTimeout = True
+                          timeout = 0
+
+
+      
+      if board.board[selected_field[0]][selected_field[1]] and board.board[selected_field[0]][selected_field[1]].name != 'knight' and movement_allowed:
         no_collision = board.no_collision(selected_field[0], selected_field[1], mouse_pos[0], mouse_pos[1])
-        # print(no_collision)
       else:
         no_collision = True
-      # print(movement_allowed)
-    
-      if movement_allowed and mouse_pos != selected_field and different_color and no_collision:
+      if promotion:
+        movement_allowed = False
+        
+      if movement_allowed and mouse_pos != selected_field and different_color and no_collision and not castling:
         board.board[mouse_pos[0]][mouse_pos[1]] = board.board[selected_field[0]][selected_field[1]]
         if board.board[selected_field[0]][selected_field[1]].name == "pawn":
             if mouse_pos[0] == 0 or mouse_pos[0] == 7:
               promotion = True
               promotion_x = mouse_pos[1]
               promotion_y = mouse_pos[0]
-              # board.board[mouse_pos[0]][mouse_pos[1]].name = "queen"
         board.board[mouse_pos[0]][mouse_pos[1]].selected = False
         board.board[selected_field[0]][selected_field[1]] = None
-        '''
-        if red_move:
-            red_move = False
-        else:
-            red_move = True
-        '''
         isTimeout = True
         timeout = 0
            

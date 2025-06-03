@@ -3,6 +3,7 @@ class Piece:
         self.name = name
         self.color = color
         self.selected = False
+        self.has_moved = False
 
     def check_movement(self, i, j, k, l):
         down_factor = i-j
